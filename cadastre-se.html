@@ -1,0 +1,138 @@
+<!DOCTYPE html> <!-- Declaração do tipo de documento HTML. -->
+
+<html lang="pt-br"> <!-- Abertura da tag HTML com a especificação do idioma (português do Brasil). -->
+<head> <!-- Abertura da tag cabeçalho do documento. -->
+  <meta charset="UTF-8"> <!-- Meta tag para especificar o conjunto de caracteres UTF-8. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Meta tag para configuração da viewport em dispositivos móveis. -->
+  <title>Cadastre-se</title> <!-- Título da página exibido na aba do navegador. -->
+  <link rel="stylesheet" href="./css/style-cadastre-se.css"> <!-- Link para o arquivo CSS local style-cadastre-se.css. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"> <!-- Link para o arquivo CSS da biblioteca Font Awesome hospedado na web. -->
+</head> <!-- Fechamento da tag cabeçalho do documento. -->
+
+<body> <!-- Abertura da tag corpo do documento. -->
+
+  <form id="registration-form" action="/" method="post"> <!-- Abertura do formulário com id registration-form e método de envio POST. -->
+    <h2>Cadastre-se</h2> <!-- Título do formulário. -->
+    <div class="form-group nome"> <!-- Divisão do formulário para o campo de nome. -->
+      <label for="nome">Nome Completo</label> <!-- Rótulo para o campo de entrada de nome. -->
+      <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo"> <!-- Campo de entrada de texto para o nome. -->
+    </div> <!-- Fechamento da divisão para o campo de nome. -->
+
+    <!-- Os próximos elementos seguem a mesma estrutura: um rótulo (label) seguido por um campo de entrada (input) dentro de uma divisão (div). -->
+    <!-- Cada um representa um campo de formulário para diferentes informações do usuário. -->
+    <div class="form-group endereco_residencia">
+      <!-- Divisão do formulário para o campo de endereço de residência. -->
+      <label for="endereco_residencia">Endereço de Residência</label>
+      <!-- Rótulo para o campo de entrada de endereço de residência. -->
+      <input type="text" id="endereco_residencia" name="endereco_residencia" placeholder="Digite seu endereço de residência">
+      <!-- Campo de entrada de texto para o endereço de residência com espaço reservado para texto de orientação. -->
+</div>
+
+<div class="form-group telefone">
+      <!-- Divisão do formulário para o campo de telefone. -->
+      <label for="telefone">Telefone</label>
+      <!-- Rótulo para o campo de entrada de telefone. -->
+      <input type="tel" id="telefone" name="telefone" placeholder="Digite seu número de telefone">
+      <!-- Campo de entrada de telefone com espaço reservado para texto de orientação. -->
+</div>
+
+<div class="form-group regiao_coleta">
+      <!-- Divisão do formulário para o campo de região de coleta. -->
+      <label for="regiao_coleta">Região de Coleta (ex: centro, bairros até 2 km da residência)</label>
+      <!-- Rótulo para o campo de entrada de região de coleta. -->
+      <input type="text" id="regiao_coleta" name="regiao_coleta" placeholder="Digite a região de coleta">
+      <!-- Campo de entrada de texto para a região de coleta com espaço reservado para texto de orientação. -->
+</div>
+
+<div class="form-group gender">
+      <!-- Divisão do formulário para o campo de gênero. -->
+      <label for="gender">Gênero</label>
+      <!-- Rótulo para o campo de seleção de gênero. -->
+
+      <select id="gender" name="gender"> <!-- Lista suspensa (select) para selecionar o gênero. -->
+        <option value="" selected disabled>Selecione seu gênero</option> <!-- Opção padrão desabilitada para seleção do gênero. -->
+        <option value="masculino">Masculino</option> <!-- Opção para gênero masculino. -->
+        <option value="feminino">Feminino</option> <!-- Opção para gênero feminino. -->
+        <option value="outro">Outro</option> <!-- Opção para outro gênero. -->
+      </select>
+    </div>
+
+    <div class="form-group email">
+      <!-- Divisão do formulário para o campo de endereço de e-mail. -->
+      <label for="email">Endereço de E-mail</label>
+      <!-- Rótulo para o campo de entrada de e-mail. -->
+      <input type="email" id="email" name="email" placeholder="Digite seu endereço de e-mail">
+      <!-- Campo de entrada de e-mail com espaço reservado para texto de orientação. -->
+</div>
+
+<div class="form-group password">
+  <!-- Divisão do formulário para o campo de senha. -->
+  <label for="password">Senha</label>
+  <!-- Rótulo para o campo de entrada de senha. -->
+  <input type="password" id="password" name="password" placeholder="Digite sua senha">
+  <!-- Campo de entrada de senha com espaço reservado para texto de orientação. -->
+  <i id="pass-toggle-btn" class="fa-solid fa-eye"></i>
+  <!-- Ícone de olho para alternar a visibilidade da senha. -->
+</div>
+
+<div class="form-group submit-btn">
+  <!-- Divisão do formulário para o botão de envio. -->
+  <input type="submit" value="Enviar">
+  <!-- Botão de envio do formulário. -->
+</div>
+
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Adiciona um ouvinte de evento que é acionado quando o DOM é completamente carregado.
+      const form = document.getElementById('registration-form'); // Obtém o formulário pelo seu ID.
+      form.addEventListener('submit', function (event) { // Adiciona um ouvinte de evento para o envio do formulário.
+        event.preventDefault(); // Previne o comportamento padrão de envio do formulário.
+
+        // Obtém os valores dos campos de entrada do formulário.
+        const nome = document.getElementById('nome').value;
+        const endereco_residencia = document.getElementById('endereco_residencia').value;
+        const telefone = document.getElementById('telefone').value;
+        const regiao_coleta = document.getElementById('regiao_coleta').value;
+        const gender = document.getElementById('gender').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('password').value;
+
+        // Cria um objeto contendo os dados do formulário.
+        const data = {
+          nome,
+          endereco_residencia,
+          telefone,
+          regiao_coleta,
+          gender,
+          email,
+          senha
+        };
+
+        // Envia os dados do formulário para o servidor.
+        fetch("http://localhost:5500/index_interesse", {
+          method: 'POST', // Método HTTP POST para enviar os dados.
+          headers: {
+            'Content-Type': 'application/json' // Define o tipo de conteúdo do corpo da requisição como JSON.
+          },
+          body: JSON.stringify(data) // Converte o objeto de dados em formato JSON.
+        })
+        .then(response => response.text()) // Processa a resposta como texto.
+        .then(data => {
+          alert(data); // Exibe um alerta com a resposta do servidor.
+        })
+        .catch(error => {
+          console.error('Error sending data:', error); // Exibe um erro no console em caso de falha no envio dos dados.
+          alert('Erro ao enviar dados'); // Exibe um alerta de erro.
+        });
+      });
+    });
+  </script>
+
+
+  <script src="H:\projeto unisal\final projeto\Ecoperto final\Ecoperto final\js\script.js"></script>
+</body>
+</html>
+
+

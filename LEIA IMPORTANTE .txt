@@ -1,0 +1,3 @@
+
+
+CMD DENTRO DA PASTA  ESCREVER node server.js 
